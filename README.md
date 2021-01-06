@@ -16,5 +16,5 @@ Revisiting BM Boghosian, PV Coveney, and H Wang. *A new pathology in the Simulat
 
 ![bifurcation](plots/bifurcation.png?raw=true "Bifurcation")
 
-**Fig. 4** Bifurcation of h(x) with changing β as simulated with various number formats. (a) Analytical bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
+**Fig. 4** Bifurcation of h(x) with changing β as simulated with various number formats. (a) Analytical bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16. Normlisation is applied with max(hᵦ(x)).
 
