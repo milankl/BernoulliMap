@@ -59,10 +59,10 @@ are rounding error-free.
 
 ![beta2](plots/beta2.png?raw=true "Bernoulli map with beta=2")
 
-**Fig. 1** The Bernoulli map fᵦ for β=2 with different number formats. (a) Float32, (b) Float16, (c) Posit32
+***Fig. 1** The Bernoulli map fᵦ for β=2 with different number formats. (a) Float32, (b) Float16, (c) Posit32
 and (d) LogFixPoint16 starting from random initial conditions in `[0,1)`. The Bernoulli map f₂ does not introduce arithmetic
 rounding errors in (a-c), such that stochastic rounding has no impact. The logfix subtraction in f₂ introduces rounding errors
-in (d) that prevent the collapse of the attractor to 0 in (a-c).
+in (d) that prevent the collapse of the attractor to 0 in (a-c).*
 
 Interestingly, the logarithmic-fixed point number format [LogFixPoint16](https://github.com/milankl/LogFixPoint16s.jl) does not 
 show the collapse of the attractor after (at most) `n` time steps, which corresponds to the number of significant/fraction bits in
@@ -85,11 +85,11 @@ an artifact from the methodology.
 
 ![invariant measures](plots/inv_measures.png?raw=true "Invariant measures of the Bernoulli map")
 
-**Fig. 2** The invariant measures of the generalised Bernoulli map for β = (a) 3/2, (b) 4/3, (c) 5/4 and (d) 6/5 
+***Fig. 2** The invariant measures of the generalised Bernoulli map for β = (a) 3/2, (b) 4/3, (c) 5/4 and (d) 6/5 
 calculated with different number formats and rounding modes: 64 and 32-bit floating-point numbers (Float64,Float32),
 32-bit posits and Float32 with stochastic rounding. The invariant measures are obtained from long integrations of the
 Bernoulli map from many different initial conditions `x₀` in `[0,1)`. Histograms of x with bin width 0.025 and the
-analytical invariant measures are normalised.
+analytical invariant measures are normalised.*
 
 Other than for β=2, where the attractor entirely collapses, the misrepresentation of the invariant measure here is only slight.
 The question arises whether this is improved with higher precision or with other number formats. The error between the
@@ -102,10 +102,10 @@ error is indistinguishable from Float64.
 
 ![error](plots/error_invariant.png?raw=true "Error in invariant measures")
 
-**Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures h*(x) simulated with different number
+***Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures h*(x) simulated with different number
 formats are quantified from the histograms in Fig. 2. The errors are calculated with respect to the analytical invariant measures
 `h(x)`. The standard deviations of the error distributions are denoted with 𝜎. For Float16 and LogFixPoint16 parts of the error
-distribution is outside of the axis limits.
+distribution is outside of the axis limits.*
 
 ## Bifurcation diagram of the invariant measures
 
@@ -124,7 +124,7 @@ which reduce with higher precision.
 
 ![bifurcation](plots/bifurcation.png?raw=true "Bifurcation")
 
-**Fig. 4** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
+***Fig. 4** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
 (a) Analytical invariant measure's bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated
 with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
-Normalisation is applied with max(hᵦ(x)).
+Normalisation is applied with max(hᵦ(x)).*
