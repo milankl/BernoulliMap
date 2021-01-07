@@ -10,6 +10,20 @@ Atmospheric, Oceanic and Planetary Physics, University of Oxford, UK
 The corresponding notebook with details on the numerical implementation can be
 found [here](https://github.com/milankl/BernoulliMap/blob/master/src/Bernoulli_map.ipynb).
 
+## Abstract
+
+The generalised Bernoulli map was recently used to analyse a "new pathology" of binary
+number formats in dynamical systems by Boghosian, Coveney and Wang, 2019.
+We revisit their results when simulating the generalised Bernoulli map with the following 
+number formats: 16, 32 and 64-bit floating-points numbers, with deterministic and stochastic
+rounding, 32-bit posits and 16-bit logarithmic fixed-point numbers (logfixs).
+The numerical collapse of the attractor is confirmed for the special case β=2,
+which can only be prevented with logfixs whose rounding errors on subtraction preserve
+the chaotic property. For the generalised Bernoulli map with varying β the attractor
+is not found to collapse and better represented with higher precision number formats,
+similar as in many other dynamical systems. Especially Float64 and Float32 with stochastic
+rounding show negligible discrepancy to the analytical invariant measures.
+
 ## The generalised Bernoulli map and its invariant measures
 
 The generalised Bernoulli map is a one-variable chaotic system
@@ -113,4 +127,4 @@ which reduce with higher precision.
 **Fig. 4** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
 (a) Analytical invariant measure's bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated
 with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
-Normlisation is applied with max(hᵦ(x)).
+Normalisation is applied with max(hᵦ(x)).
