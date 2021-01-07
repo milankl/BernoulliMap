@@ -128,3 +128,17 @@ which reduce with higher precision.
 (a) Analytical invariant measure's bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated
 with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
 Normalisation is applied with max(hᵦ(x)).*
+
+## Attractor of the Bernoulli map
+
+The attractor of the Bernoulli map is dense and although collapsing for β=2 (Fig. 1) similarly dense when simulated with various
+number formats for the general case of `1<β<2` (Fig. 5). The attractor is slightly changed with Float16 and islands of attraction
+appear which are an artefact of the 16-bit arithmetic. Some smaller discrepancies can be seen for β not much larger than 1, where
+the analytical structure is not well reproduced. Apart from these differneces the general attractor structure is well simulated
+with finite precision arithmetics.
+
+![attractor](plots/attractor.png?raw=true "Attractor")
+
+***Fig. 5** Analytical attractor and as simulated with various number formats. (a) Analytical attractor sampled from Hofbauer's `h(x)`,
+(b-f) attractors obtained from simulation of the generalised Bernoulli map with various number formats: (b) Float64, (c) Float32, (d)
+Posit32, (e) Float32 + stochastic rounding, (f) Float16.*
