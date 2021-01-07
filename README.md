@@ -88,7 +88,7 @@ an artifact from the methodology.
 ***Fig. 2** The invariant measures of the generalised Bernoulli map for β = (a) 3/2, (b) 4/3, (c) 5/4 and (d) 6/5 
 calculated with different number formats and rounding modes: 64 and 32-bit floating-point numbers (Float64,Float32),
 32-bit posits and Float32 with stochastic rounding. The invariant measures are obtained from long integrations of the
-Bernoulli map from many different initial conditions `x₀` in `[0,1)`. Histograms of x with bin width 0.025 and the
+Bernoulli map from many different initial conditions `x₀` in `[0,1)`. Histograms of `x` with bin width 0.025 and the
 analytical invariant measures are normalised.*
 
 Other than for β=2, where the attractor entirely collapses, the misrepresentation of the invariant measure here is only slight.
@@ -102,9 +102,9 @@ error is indistinguishable from Float64.
 
 ![error](plots/error_invariant.png?raw=true "Error in invariant measures")
 
-***Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures h*(x) simulated with different number
+***Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures `h*(x)` simulated with different number
 formats are quantified from the histograms in Fig. 2. The errors are calculated with respect to the analytical invariant measures
-`h(x)`. The standard deviations of the error distributions are denoted with 𝜎. For Float16 and LogFixPoint16 parts of the error
+`h(x)`. The standard deviations of the error distributions are denoted with `𝜎`. For Float16 and LogFixPoint16 parts of the error
 distribution is outside of the axis limits.*
 
 ## Bifurcation diagram of the invariant measures
