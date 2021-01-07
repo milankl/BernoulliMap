@@ -2,8 +2,13 @@
 
 Revisiting BM Boghosian, PV Coveney, and H Wang. *A new pathology in the Simulation of Chaotic Dynamical Systems on Digital Computers*, **Adv. Theory Simul. 2019**, 2, 1900125, DOI: [10.1002/adts.201900125](https://dx.doi.org/10.1002/adts.201900125)
 
-M Kloewer, 2021.
-The corresponding notebook with details on the numerical implementation can be found [here](https://github.com/milankl/BernoulliMap/blob/master/src/Bernoulli_map.ipynb).
+
+M Klöwer and A Paxton, 2021.  
+Atmospheric, Oceanic and Planetary Physics, University of Oxford, UK
+
+
+The corresponding notebook with details on the numerical implementation can be
+found [here](https://github.com/milankl/BernoulliMap/blob/master/src/Bernoulli_map.ipynb).
 
 ## The generalised Bernoulli map and its invariant measures
 
@@ -40,12 +45,12 @@ are rounding error-free.
 
 ![beta2](plots/beta2.png?raw=true "Bernoulli map with beta=2")
 
-**Fig. 1** The generalised Bernoulli map fᵦ for β=2 with different number formats. (a) Float32, (b) Float16, (c) Posit32
+**Fig. 1** The Bernoulli map fᵦ for β=2 with different number formats. (a) Float32, (b) Float16, (c) Posit32
 and (d) LogFixPoint16 starting from random initial conditions in `[0,1)`. The Bernoulli map f₂ does not introduce arithmetic
 rounding errors in (a-c), such that stochastic rounding has no impact. The logfix subtraction in f₂ introduces rounding errors
 in (d) that prevent the collapse of the attractor to 0 in (a-c).
 
-Interestingly, the logarithmic-fixed point number format [LogFixPoint16](https://github.com/milankl/StochasticRounding.jl) does not 
+Interestingly, the logarithmic-fixed point number format [LogFixPoint16](https://github.com/milankl/LogFixPoint16s.jl) does not 
 show the collapse of the attractor after (at most) `n` time steps, which corresponds to the number of significant/fraction bits in
 the respective number format. Logfixs are rounding error-free in multiplication, but not in addition, such that the `mod 1` operation
 of the Bernoulli map yields both `0` or `1` in the least signficant bit, preventing the attractor from collapse. Consequently, the
@@ -56,10 +61,13 @@ rounding error for logfixs preserves the chaotic property of the analytical Bern
 The Hofbauer invariant measure `hᵦ(x)` of the Bernoulli map are compared with numerical estimations when simulating the system with various number 
 formats. The Bernoulli map is calculated with an ensemble of `Nens = 1000` members (each starting from a different random initial condition)
 for `Nsteps = 10,000` time steps, discarding a spin-up of 100 time steps. The sample size for `x` is therefore about `10,000,000`, smaller ensembles
-or fewer time steps were not found to yield robust statistics. The invariant measures are estimated as histograms `h*(x)` over `x` with a bin-width of 0.025 and normalised to probability 1, `∫₀¹ h*(x) dx = 1`.
+or fewer time steps were not found to yield robust statistics. The invariant measures are estimated as histograms `h*(x)` over `x` with a
+bin-width of 0.025 and normalised to probability 1, `∫₀¹ h*(x) dx = 1`.
 
 The free parameter β is changed to be 3/2, 4/3, 5/4 or 6/5, such that the multiplication with β in the Bernoulli map is not rounding error-free.
-The estimated invariant measures resemble the analytical one from Hofbauer, but differ due to rounding errors. Note that the discrete analytical invariant measures do not coincide with the chosen bins, such that the discrete steps are not correctly represented - an artifact from the methodology.
+The estimated invariant measures resemble the analytical one from Hofbauer, but differ due to rounding errors. Note that the discrete
+analytical invariant measures do not coincide with the chosen bins, such that the discrete steps are not correctly represented - 
+an artifact from the methodology.
 
 ![invariant measures](plots/inv_measures.png?raw=true "Invariant measures of the Bernoulli map")
 
@@ -71,13 +79,38 @@ analytical invariant measures are normalised.
 
 Other than for β=2, where the attractor entirely collapses, the misrepresentation of the invariant measure here is only slight.
 The question arises whether this is improved with higher precision or with other number formats. The error between the
-analytical invariant measure and the numerical estimation is shown in Fig. 3. 
+analytical invariant measure and the numerical estimation is shown in Fig. 3. The lower errors with Float64 compared to Float32
+confirm that a higher precision reduces the errors in the simulation of the Bernoulli map. All 32-bit formats have a considerably
+lower error than the 16-bit formats, Float16 and LogFixPoint16, mathing the idea that more precision reduces the overall error
+in the simulation of dynamical systems. Among the 32-bit formats, Posit32 performs better than Float32, which can be explained
+with its higher precision of numbers around 1. Stochastic rounding for Float32 drastically reduces the error such that the remaining
+error is indistinguishable from Float64.
 
 ![error](plots/error_invariant.png?raw=true "Error in invariant measures")
 
-**Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures h*(x) simulated with different number formats are quantified from the histograms in Fig. 2. The errors are calculated with respect to the analytical invariant measures h(x). The standard deviations of the error distributions are denoted with 𝜎. For Float16 and LogFixPoint16 parts of the error distribution is outside of the axis limits.
+**Fig. 3** Error in the invariant measures for the Bernoulli map. The invariant measures h*(x) simulated with different number
+formats are quantified from the histograms in Fig. 2. The errors are calculated with respect to the analytical invariant measures
+`h(x)`. The standard deviations of the error distributions are denoted with 𝜎. For Float16 and LogFixPoint16 parts of the error
+distribution is outside of the axis limits.
+
+## Bifurcation diagram of the invariant measures
+
+To investigate the structure of the generalised Bernoulli map, we analyse the bifurcation diagram of the invariant measures
+varying β in `(1,2)`. Although the attractor of the generalised Bernoulli map is dense, its invariant measure consists of
+discrete steps as shown in Fig. 2. Their bifurcation is visualised in Fig. 4a as follows from a sampling of the analytical
+invariant measure (to keep the methodology consistent and to account for artifacts as discussed above from the histogram binning),
+and from numerical simulations of the generalised Bernoulli map with various number formats.
+
+The analytical bifurcation diagram shows a complex structure that is, in general, very well represented with Float64,
+Float32 + stochastic rounding, or Posit32 (despite slightly less sharp). Float32 resembles the structure, but appears
+washed-out as the invariant measures are not as discrete and errors prevail (Fig. 3). The collapse of the attractor,
+as shown for β=2 in Fig. 1, should therefore be regarded more as a special case due to the vanishing rounding errors.
+In general, the Bernoulli map was found to be subject to similar rounding errors as observed in many other systems
+which reduce with higher precision.
 
 ![bifurcation](plots/bifurcation.png?raw=true "Bifurcation")
 
-**Fig. 4** Bifurcation of h(x) with changing β as simulated with various number formats. (a) Analytical bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16. Normlisation is applied with max(hᵦ(x)).
-
+**Fig. 4** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
+(a) Analytical invariant measure's bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated
+with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
+Normlisation is applied with max(hᵦ(x)).
