@@ -121,8 +121,8 @@ The analytical bifurcation diagram shows a complex structure that is, in general
 Float32 + stochastic rounding, or Posit32 (despite slightly less sharp). Float32 resembles the structure, but appears
 washed-out as the invariant measures are not as discrete and errors prevail (Fig. 3). The collapse of the attractor,
 as shown for β=2 in Fig. 1, should therefore be regarded more as a special case due to the vanishing rounding errors.
-In general, the Bernoulli map was found to be subject to similar rounding errors as observed in many other systems
-which reduce with higher precision.
+However, the bifurction diagram as results from Float16 arithmetic shows discrepancies, such that 16-bit arithmetic
+were not found to be sufficient to preserve the invariant measure of the system.
 
 ![bifurcation](plots/bifurcation.png?raw=true "Bifurcation")
 
