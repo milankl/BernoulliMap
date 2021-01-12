@@ -19,10 +19,12 @@ number formats: 16, 32 and 64-bit floating-points numbers, with deterministic an
 rounding, 32-bit posits and 16-bit logarithmic fixed-point numbers (logfixs).
 The numerical collapse of the attractor is confirmed for the special case β=2,
 which can only be prevented with logfixs whose rounding errors on subtraction preserve
-the chaotic property. For the generalised Bernoulli map with varying β the attractor
-is not found to collapse and better represented with higher precision number formats,
-similar as in many other dynamical systems. Especially Float64 and Float32 with stochastic
-rounding show negligible discrepancy to the analytical invariant measures.
+the chaotic property better. For the generalised Bernoulli map with varying β the attractor
+is not found to collapse and better represented with higher precision number formats. Short
+periodic orbits are found, which, however, extend in period length with more precision, 
+similar as in many other dynamical systems. Despite the periodic orbits, a negligible 
+discrepancy to the analytical invariant measures is found as long as enough precision is
+provided, especially with Float64 or Float32 with stochastic rounding.
 
 ## The generalised Bernoulli map and its invariant measures
 
