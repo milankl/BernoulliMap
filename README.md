@@ -1,11 +1,11 @@
 # Generalised Bernoulli Map with various number formats
 
-Revisiting BM Boghosian, PV Coveney, and H Wang. *A new pathology in the
-Simulation of Chaotic Dynamical Systems on Digital Computers*, **Adv. Theory Simul. 2019**,
-2, 1900125, DOI: [10.1002/adts.201900125](https://dx.doi.org/10.1002/adts.201900125)
+Revisiting BM Boghosian, PV Coveney, and H Wang. *A new pathology in the Simulation of Chaotic Dynamical Systems on Digital Computers*, **Adv. Theory Simul. 2019**, 2, 1900125, DOI: [10.1002/adts.201900125](https://dx.doi.org/10.1002/adts.201900125)
+
 
 M Klöwer and A Paxton, 2021.  
 Atmospheric, Oceanic and Planetary Physics, University of Oxford, UK
+
 
 The corresponding notebook with details on the numerical implementation can be
 found [here](https://github.com/milankl/BernoulliMap/blob/master/src/Bernoulli_map.ipynb).
@@ -109,12 +109,29 @@ formats are quantified from the histograms in Fig. 2. The errors are calculated 
 `h(x)`. The standard deviations of the error distributions are denoted with `𝜎`. For Float16 and LogFixPoint16 parts of the error
 distribution is outside of the axis limits.*
 
-## Bifurcation diagram of the invariant measures
+## Attractor of the Bernoulli map
 
-To investigate the structure of the generalised Bernoulli map, we analyse the bifurcation diagram of the invariant measures
-varying β in `(1,2)`. Although the attractor of the generalised Bernoulli map is dense, its invariant measure consists of
-discrete steps as shown in Fig. 2. Their bifurcation is visualised in Fig. 4a as follows from a sampling of the analytical
-invariant measure (to keep the methodology consistent and to account for artifacts as discussed above from the histogram binning),
+The attractor of the Bernoulli map is dense and although collapsing for β=2 (Fig. 1) similarly dense when simulated with various
+number formats for the general case of `1<β<2` (Fig. 5). The invariant measure is slightly changed with Float16 and islands of high probability mass
+appear which are an artefact of the 16-bit arithmetic. Some smaller discrepancies can be seen for β not much larger than 1, where
+the analytical structure is not well reproduced. Apart from these differences the general invariant measure structure is well simulated
+with finite precision arithmetics.
+
+![attractor](plots/attractor.png?raw=true "Attractor")
+
+***Fig. 4** Analytical attractor and as simulated with various number formats. (a) Analytical attractor sampled from Hofbauer's `h(x)`,
+(b-f) attractors obtained from simulation of the generalised Bernoulli map with various number formats: (b) Float64, (c) Float32, (d)
+Posit32, (e) Float32 + stochastic rounding, (f) Float16.*
+
+## A bifurcation diagram of the invariant measures
+
+To investigate the structure of the generalised Bernoulli map, we analyse a bifurcation diagram of 
+the quantization levels of the invariant measures varying β in `(1,2)`. 
+Although the attractor of the generalised Bernoulli map is dense in [0,1], its invariant measure consists of
+discrete quantization levels as shown in Fig. 2. The bifurcation of these levels is visualised in Fig. 4a 
+as follows from a sampling of the analytical
+invariant measure (to keep the methodology consistent and to account 
+for artifacts as discussed above from the histogram binning),
 and from numerical simulations of the generalised Bernoulli map with various number formats.
 
 The analytical bifurcation diagram shows a complex structure that is, in general, very well represented with Float64,
@@ -126,21 +143,7 @@ were not found to be sufficient to preserve the invariant measure of the system.
 
 ![bifurcation](plots/bifurcation.png?raw=true "Bifurcation")
 
-***Fig. 4** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
+***Fig. 5** Bifurcation diagram of the invariant measure `h(x)` analytically and as simulated with various number formats, varying β.
 (a) Analytical invariant measure's bifurcation from Hofbauer's h(x), (b-f) Bifurcation obtained from the histograms of x simulated
 with various number formats: (b) Float64, (c) Float32, (d) Posit32, (e) Float32 + stochastic rounding, (f) Float16.
 Normalisation is applied with max(hᵦ(x)).*
-
-## Attractor of the Bernoulli map
-
-The attractor of the Bernoulli map is dense and although collapsing for β=2 (Fig. 1) similarly dense when simulated with various
-number formats for the general case of `1<β<2` (Fig. 5). The attractor is slightly changed with Float16 and islands of attraction
-appear which are an artefact of the 16-bit arithmetic. Some smaller discrepancies can be seen for β not much larger than 1, where
-the analytical structure is not well reproduced. Apart from these differneces the general attractor structure is well simulated
-with finite precision arithmetics.
-
-![attractor](plots/attractor.png?raw=true "Attractor")
-
-***Fig. 5** Analytical attractor and as simulated with various number formats. (a) Analytical attractor sampled from Hofbauer's `h(x)`,
-(b-f) attractors obtained from simulation of the generalised Bernoulli map with various number formats: (b) Float64, (c) Float32, (d)
-Posit32, (e) Float32 + stochastic rounding, (f) Float16.*
