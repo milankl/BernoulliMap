@@ -3,6 +3,9 @@ uuid = "3703d90c-4a5c-4ebb-a2a0-1dfb5a33ab86"
 authors = ["Milan <milankloewer@gmx.de> and contributors"]
 version = "0.1.0"
 
+[deps]
+Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
+
 [compat]
 julia = "1"
 

@@ -1,3 +1,5 @@
+import Distributed: @distributed
+
 """Returns an array of subsequent values from the Bernoulli map with parameter β, starting
 from x over N time steps."""
 function bernoulli_map(x::T,β::T,N::Int) where T
@@ -52,12 +54,12 @@ function orbit_minimum( x::T,           # initial condition on the orbit
 end
 
 """Returns both the length and minimum of the orbit reached from initial condition x."""
-function orbit_length_minimum(  x::T,           # initial condition on the orbit
-                                β::T,           # Bernoulli parameter
-                                N::Int) where T # initial period length to test for
-    o,x = orbit_length(x,β,N)    
+function orbit_length_minimum(  x0::T,              # initial condition on the orbit
+                                β::T,               # Bernoulli parameter
+                                N::Int=10) where T  # initial period length to test for
+    o,x = orbit_length(x0,β,N)    
     x = orbit_minimum(x,β,o)
-    return o,x
+    return Orbit(β,o,x,Float64(eps(x0)))
 end
 
 """For a given number format T, parameter β and n initial conditions, find orbits of the
@@ -69,18 +71,13 @@ function find_orbits(   ::Type{T},                  # Number format
     # pre-allocate empty array of orbits
     orbits = Orbit[]
     uint_type = eval(Symbol("UInt"*repr(sizeof(T)*8)))
+    Tβ = T(β)
 
     tic = time()
-    for i in 1:n            # for n ICs calculate orbit lengths & x
+    orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
 #         x0 = reinterpret(T,uint_type(i))
         x0 = T(rand())
-        o,x = orbit_length_minimum(x0,T(β),10)    
-        this_orbit = Orbit(T(β),o,x,Float64(eps(x0)))
-        if ~(this_orbit in orbits)
-            push!(orbits,this_orbit)
-        else
-            orbits[[this_orbit == o for o in orbits]][1] += this_orbit
-        end
+        orbit_length_minimum(x0,Tβ,10)    
     end
     
     sort!(orbits)   # from shortest to longest orbit
