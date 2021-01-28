@@ -1,7 +1,7 @@
 module BernoulliMap
 
-    export find_orbits, bernoulli_map, bernoulli_map_minimum,
-        bernoulli_orbit
+    export Orbit, find_orbits, bernoulli_map, orbit_length_minimum,
+        orbit_minimum, orbit_length
 
     include("utils.jl")
     include("orbits.jl")
