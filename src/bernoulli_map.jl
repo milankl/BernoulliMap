@@ -75,9 +75,32 @@ function find_orbits(   ::Type{T},                  # Number format
 
     tic = time()
     orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
-#         x0 = reinterpret(T,uint_type(i))
-        x0 = T(rand())
-        orbit_length_minimum(x0,Tβ,10)    
+        orbit_length_minimum(reinterpret(T,uint_type(i)),Tβ,10)    
+    end
+    
+    sort!(orbits)   # from shortest to longest orbit
+    normalise_basins!(orbits)
+    
+    toc = time()
+    time_elapsed = readable_secs(toc-tic)
+    println("Found $(length(orbits)) orbits in $time_elapsed.")
+    return orbits
+end
+
+"""For a given number format T, parameter β and n initial conditions, find orbits of the
+Bernoulli map and test for their uniqueness."""
+function find_orbits_rand(  ::Type{T},                  # Number format
+                            β::Real,                    # Bernoulli parameter
+                            n::Int=10000) where T       # n initial conditions
+
+    # pre-allocate empty array of orbits
+    orbits = Orbit[]
+    uint_type = eval(Symbol("UInt"*repr(sizeof(T)*8)))
+    Tβ = T(β)
+
+    tic = time()
+    orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
+        orbit_length_minimum(T(rand()),Tβ,10)    
     end
     
     sort!(orbits)   # from shortest to longest orbit
