@@ -76,5 +76,10 @@ function Base.isless(o1::Orbit{T},o2::Orbit{T}) where T
 end
 
 function Base.show(io::IO, o::Orbit{T}) where T
-    print(io,"Orbit{$T,β=$(repr(o.β))}(length=$(o.length), min=$(repr(o.min)), basin=$(o.b))")
+
+    l = @sprintf("%6d",o.length)
+    m = @sprintf("%16s",repr(o.min))
+    b = @sprintf("%22s",repr(o.b))
+
+    print(io,"Orbit{$T,β=$(repr(o.β))}(length=$l, min=$m, basin=$b)")
 end

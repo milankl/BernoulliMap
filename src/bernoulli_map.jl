@@ -18,7 +18,7 @@ end
 Recursive function that starts testing for orbits over period length N, but enlarges
 that testing period if no orbit was found."""     
 function orbit_length(  x::T,            # initial condition
-                        β::T,            # Bernoulli parameter
+                        β::Float64,            # Bernoulli parameter
                         N::Int) where T  # max period length
     oone = one(T)                          # 1 in format T
     x0 = x                          # new initial condition
@@ -27,8 +27,8 @@ function orbit_length(  x::T,            # initial condition
 
     while n == 0 && j < N           # stop when orbit is found (n >0) or when max period is reached
         j += 1
-        x = β*x                     # actual Bernoulli map
-        x = x >= oone ? x-oone : x  # x mod 1
+        x = Float32(β*x % 1)                     # actual Bernoulli map
+        # x = x >= oone ? x-oone : x  # x mod 1
         n = x0 == x ? j : 0         # check for periodicity
     end
 
@@ -41,13 +41,13 @@ end
 
 """Returns the minimum x on the orbit of length N, starting from x (which is assumed to be on the orbit."""
 function orbit_minimum( x::T,           # initial condition on the orbit
-                        β::T,           # Bernoulli parameter
+                        β::Float64,           # Bernoulli parameter
                         N::Int) where T # the period length of the orbit
     oone = one(T)                   # 1 in format T
     xmin = x                        # store the orbit's minimum in xmin
     for i in 2:N+1
-        x = β*x                     # actual Bernoulli map
-        x = x >= oone ? x-oone : x  # x mod 1
+        x = Float32(β*x % 1)                     # actual Bernoulli map
+        # x = x >= oone ? x-oone : x  # x mod 1
         xmin = x < xmin ? x : xmin  # always store the smallest x on the orbit
     end
     return xmin
@@ -55,11 +55,11 @@ end
 
 """Returns both the length and minimum of the orbit reached from initial condition x."""
 function orbit_length_minimum(  x0::T,              # initial condition on the orbit
-                                β::T,               # Bernoulli parameter
+                                β::Float64,               # Bernoulli parameter
                                 N::Int=10) where T  # initial period length to test for
     o,x = orbit_length(x0,β,N)    
     x = orbit_minimum(x,β,o)
-    return Orbit(β,o,x,Float64(eps(x0)))
+    return Orbit(T(β),o,x,Float64(eps(x0)))
 end
 
 """For a given number format T, parameter β and n initial conditions, find orbits of the
@@ -75,7 +75,7 @@ function find_orbits(   ::Type{T},                  # Number format
 
     tic = time()
     orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
-        orbit_length_minimum(reinterpret(T,uint_type(i)),Tβ,10)    
+        orbit_length_minimum(reinterpret(T,uint_type(i)),β,10)    
     end
     
     sort!(orbits)   # from shortest to longest orbit
@@ -100,7 +100,7 @@ function find_orbits_rand(  ::Type{T},                  # Number format
 
     tic = time()
     orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
-        orbit_length_minimum(T(rand()),Tβ,10)    
+        orbit_length_minimum(T(rand()),β,10)    
     end
     
     sort!(orbits)   # from shortest to longest orbit
