@@ -36,7 +36,7 @@ xⱼ₊₁ = fᵦ(xⱼ) = βxⱼ mod 1
 with a dense attractor for many choices of β>1. Its invariant measures are (Hofbauer, 1978)
 
 ```
-hᵦ(x) = C∑ᴺⱼ₌₀ β ⁻¹ θ(1ⱼ - x)
+hᵦ(x) = C∑ᴺⱼ₌₀ β ⁻ʲ θ(1ⱼ - x)
 ```
 with `xⱼ = fʲᵦ(xⱼ)` and `1ⱼ = fʲᵦ(1)`. The Heaviside function is `θ(x)` and `C` a normalisation constant.
 This series is evaluated with `N→∞`, but in practice `N=100` sufficies to calculate the invariant measure
