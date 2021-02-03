@@ -1,6 +1,6 @@
 # define orbit by its length and minimum value
 mutable struct Orbit{T<:AbstractFloat}
-    β::T
+    β::Real
     length::Int
     min::T
     b::Float64
