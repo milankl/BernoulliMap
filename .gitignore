@@ -1,1 +1,4 @@
 *.jld2
+nb/.ipynb_checkpoints
+Manifest.toml
+.DS_Store
