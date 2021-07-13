@@ -112,6 +112,8 @@ function find_orbits_rand(  ::Type{T},                  # Number format
     return orbits
 end
 
+import Statsbase: fit, Histogram, mean, pweights
+
 """Convert a vector of orbits to the invariant measure,
 a histogram with `nbins` bins in [0,1)."""
 function invariant_measure(orbits::Vector{Orbit{T}},nbins::Int=40) where T
