@@ -56,11 +56,16 @@ end
 
 """Returns both the length and minimum of the orbit reached from initial condition x."""
 function orbit_length_minimum(  x0::T,              # initial condition on the orbit
-                                β::Real,               # Bernoulli parameter
+                                β::Real;            # Bernoulli parameter
+                                basin::Symbol=:x0_proportional,
                                 N::Int=10) where T  # initial period length to test for
     o,x = orbit_length(x0,β,N)    
     x = orbit_minimum(x,β,o)
-    return Orbit(β,o,x,Float64(eps(x0)))
+
+    # for starting from all floats in [0,1) use x0_proportional basins
+    # for starting from random uniform in [0,1) use uniform basins
+    b = basin == :x0_proportional ? Float64(eps(x0)) : 1.0
+    return Orbit(β,o,x,b)
 end
 
 """For a given number format T, parameter β and n initial conditions, find orbits of the
@@ -76,10 +81,11 @@ function find_orbits(   ::Type{T},                  # Number format
 
     tic = time()
     orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
-        orbit_length_minimum(reinterpret(T,uint_type(i)),β)    
+        orbit_length_minimum(reinterpret(T,uint_type(i)),β,basin=:x0_proportional)    
     end
-    
-    sort!(orbits)   # from shortest to longest orbit
+
+    orbits = reduce_orbits(orbits)      # convert Orbit to Vector{Orbit} of length 1 otherwise pass
+    sort!(orbits)                       # from shortest to longest orbit
     normalise_basins!(orbits)
     
     toc = time()
@@ -100,10 +106,11 @@ function find_orbits_rand(  ::Type{T},                  # Number format
 
     tic = time()
     orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
-        orbit_length_minimum(T(rand()),β)    
+        orbit_length_minimum(T(rand()),β,basin=:uniform)    
     end
     
-    sort!(orbits)   # from shortest to longest orbit
+    orbits = reduce_orbits(orbits)      # convert Orbit to Vector{Orbit} of length 1 otherwise pass
+    sort!(orbits)                       # from shortest to longest orbit
     normalise_basins!(orbits)
     
     toc = time()
