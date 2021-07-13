@@ -138,6 +138,7 @@ function invariant_measure(orbits::Vector{Orbit{T}},nbins::Int=40) where T
 
     for (i,orbit) in enumerate(orbits)
         X = bernoulli_map(orbit.min,orbit.β,orbit.length-1)
+        X = Float64.(X)         # convert to Float64 to avoid type promoting in fit
         H = fit(Histogram,X,bin_edges).weights
         histograms[i,:] = H / sum(H) / bin_width
     end
