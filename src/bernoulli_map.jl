@@ -42,13 +42,13 @@ end
 
 """Returns the minimum x on the orbit of length N, starting from x (which is assumed to be on the orbit."""
 function orbit_minimum( x::T,               # initial condition on the orbit
-                        β::Real,            # Bernoulli parameter
+                        β::T,               # Bernoulli parameter
                         N::Int) where T     # the period length of the orbit
     oone = one(T)                   # 1 in format T
     xmin = x                        # store the orbit's minimum in xmin
     for i in 2:N+1
-        x = T(β*x % 1)                     # actual Bernoulli map
-        # x = x >= oone ? x-oone : x  # x mod 1
+        x = β*x
+        x = x >= oone ? x-oone : x  # x mod 1
         xmin = x < xmin ? x : xmin  # always store the smallest x on the orbit
     end
     return xmin
