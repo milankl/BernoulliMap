@@ -81,7 +81,7 @@ function find_orbits(   ::Type{T},                      # Number format
     Tβ = T(β)
 
     tic = time()
-    orbits = @distributed (reduce_orbits) for i in 1:n            # for n ICs calculate orbit lengths & x
+    orbits = @distributed (reduce_orbits) for i in 0:n-1            # for n ICs calculate orbit lengths & x
         orbit_length_minimum(reinterpret(T,uint_type(i)),β,basin=:x0_proportional)    
     end
 
