@@ -60,6 +60,10 @@ function reduce_orbits(x::Array{Orbit{T},1},y::Array{Orbit{T},1}) where T
     return y
 end
 
+# convert a single orbit to a Vector{Orbit{T}}
+reduce_orbits(x::Array{Orbit{T},1}) where T = x
+reduce_orbits(x::Orbit{T}) where T = [x]
+
 function normalise_basins!(orbits::Array{Orbit{T},1}) where T
     s = 0.0
     for o in orbits
