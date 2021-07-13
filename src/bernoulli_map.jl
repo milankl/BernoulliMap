@@ -111,3 +111,23 @@ function find_orbits_rand(  ::Type{T},                  # Number format
     println("Found $(length(orbits)) orbits in $time_elapsed.")
     return orbits
 end
+
+"""Convert a vector of orbits to the invariant measure,
+a histogram with `nbins` bins in [0,1)."""
+function invariant_measure(orbits::Vector{Orbit{T}},nbins::Int=40) where T
+
+    norbits = length(orbits)
+    histograms = fill(0.0,norbits,nbins)
+    bin_width = 1/nbins
+    bin_edges = collect(0:bin_width:1)
+
+    for (i,orbit) in enumerate(orbits)
+        X = bernoulli_map(orbit.min,orbit.β,orbit.length-1)
+        H = fit(Histogram,X,bin_edges).weights
+        histograms[i,:] = H / sum(H) / bin_width
+    end
+
+    # weighted means
+    basins = [orbit.b for orbit in orbits]
+    return mean(histograms,pweights(basins),dims=1)[1,:]
+end
