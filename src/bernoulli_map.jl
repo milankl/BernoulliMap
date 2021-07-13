@@ -70,9 +70,10 @@ end
 
 """For a given number format T, parameter β and n initial conditions, find orbits of the
 Bernoulli map and test for their uniqueness."""
-function find_orbits(   ::Type{T},                  # Number format
-                        β::Real,                    # Bernoulli parameter
-                        n::Int=10000) where T       # n initial conditions
+function find_orbits(   ::Type{T},                      # Number format
+                        β::Real,                        # Bernoulli parameter
+                        n::Int=10000;                   # n initial conditions
+                        verbose::Bool=false) where T    # feedback on orbits found and time?   
 
     # pre-allocate empty array of orbits
     orbits = Orbit[]
@@ -88,17 +89,20 @@ function find_orbits(   ::Type{T},                  # Number format
     sort!(orbits)                       # from shortest to longest orbit
     normalise_basins!(orbits)
     
-    toc = time()
-    time_elapsed = readable_secs(toc-tic)
-    println("Found $(length(orbits)) orbits in $time_elapsed.")
+    if verbose
+        toc = time()
+        time_elapsed = readable_secs(toc-tic)
+        println("Found $(length(orbits)) orbits in $time_elapsed.")
+    end
     return orbits
 end
 
 """For a given number format T, parameter β and n initial conditions, find orbits of the
 Bernoulli map and test for their uniqueness."""
-function find_orbits_rand(  ::Type{T},                  # Number format
-                            β::Real,                    # Bernoulli parameter
-                            n::Int=10000) where T       # n initial conditions
+function find_orbits_rand(  ::Type{T},                      # Number format
+                            β::Real,                        # Bernoulli parameter
+                            n::Int=10000;                   # n initial conditions
+                            verbose::Bool=false) where T    #    
 
     # pre-allocate empty array of orbits
     orbits = Orbit[]
@@ -113,9 +117,11 @@ function find_orbits_rand(  ::Type{T},                  # Number format
     sort!(orbits)                       # from shortest to longest orbit
     normalise_basins!(orbits)
     
-    toc = time()
-    time_elapsed = readable_secs(toc-tic)
-    println("Found $(length(orbits)) orbits in $time_elapsed.")
+    if verbose
+        toc = time()
+        time_elapsed = readable_secs(toc-tic)
+        println("Found $(length(orbits)) orbits in $time_elapsed.")
+    end
     return orbits
 end
 
