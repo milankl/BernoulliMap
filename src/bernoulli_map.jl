@@ -18,17 +18,17 @@ end
 Recursive function that starts testing for orbits over period length N, but enlarges
 that testing period if no orbit was found."""     
 function orbit_length(  x::T,            # initial condition
-                        β::Real,         # Bernoulli parameter
+                        β::T,            # Bernoulli parameter
                         N::Int) where T  # max period length
     oone = one(T)                        # 1 in format T
     x0 = x                          # new initial condition
     n = 0                           # orbit length (0 = not found yet)
     j = 0                           # iteration counter
 
-    while n == 0 && j < N           # stop when orbit is found (n >0) or when max period is reached
+    while n == 0 && j < N           # stop when orbit is fousnd (n >0) or when max period is reached
         j += 1
-        x = T(β*x % 1)                     # actual Bernoulli map
-        # x = x >= oone ? x-oone : x  # x mod 1
+        x = β*x                     # actual Bernoulli map
+        x = x >= oone ? x-oone : x  # x mod 1
         n = x0 == x ? j : 0         # check for periodicity
     end
 
