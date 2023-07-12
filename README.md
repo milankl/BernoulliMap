@@ -1,11 +1,11 @@
 # Generalised Bernoulli Map with various number formats
+[![DOI](https://zenodo.org/badge/326968390.svg)](https://zenodo.org/badge/latestdoi/326968390)
 
 Revisiting BM Boghosian, PV Coveney, and H Wang. *A new pathology in the Simulation of Chaotic Dynamical Systems on Digital Computers*, **Adv. Theory Simul. 2019**, 2, 1900125, DOI: [10.1002/adts.201900125](https://dx.doi.org/10.1002/adts.201900125)
 
+now published in
 
-M Klöwer and A Paxton, 2021.  
-Atmospheric, Oceanic and Planetary Physics, University of Oxford, UK
-
+> Klöwer, M, PV Coveney, EA Paxton and TN Palmer, 2023. *Periodic orbits in chaotic systems simulated at low precision*, **Scientific reports**, DOI: [10.1038/s41598-023-37004-4](https://doi.org/10.1038/s41598-023-37004-4)
 
 The corresponding notebook with details on the numerical implementation can be
 found [here](https://github.com/milankl/BernoulliMap/blob/master/src/Bernoulli_map.ipynb).
